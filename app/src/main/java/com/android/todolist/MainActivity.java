@@ -4,7 +4,6 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.Button;
 
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -14,12 +13,13 @@ import com.android.todolist.common.NoteAdapter;
 import com.android.todolist.data.db.DbHelper;
 import com.android.todolist.models.NoteModel;
 import com.android.todolist.presenters.NotesPresenter;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.List;
 
 public class MainActivity extends Activity {
 
-    Button openNewNoteButton;
+    FloatingActionButton openNewNoteButton;
     LinearLayoutManager layoutManager;
     NoteAdapter noteAdapter;
     private NotesPresenter presenter;
