@@ -1,10 +1,18 @@
-package com.android.todolist;
+package com.android.todolist.common;
 
-public class NoteData {
+public class Note {
 
+    private long mId;
     private String mTitle;
     private String mText;
 
+    public long getId() {
+        return mId;
+    }
+
+    public void setId(long id) {
+        this.mId = id;
+    }
 
     public String getTitle() {
         return mTitle;
