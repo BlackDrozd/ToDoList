@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 
+import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -23,12 +24,21 @@ public class MainActivity extends Activity {
     LinearLayoutManager layoutManager;
     NoteAdapter noteAdapter;
     private NotesPresenter presenter;
+    DbHelper dbHelper;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.start_activity);
         init();
+
+        System.out.println("main8 onCreate");
+    }
+
+    @Override
+    protected void onSaveInstanceState(@NonNull Bundle outState) {
+        super.onSaveInstanceState(outState);
+        System.out.println("main8 onSave");
     }
 
     private void init() {
@@ -50,7 +60,7 @@ public class MainActivity extends Activity {
         noteRecyclerView.setLayoutManager(layoutManager);
         noteRecyclerView.setAdapter(noteAdapter);
 
-        DbHelper dbHelper = new DbHelper(this);
+        dbHelper = new DbHelper(this);
         NoteModel noteModel = new NoteModel(dbHelper);
         presenter = new NotesPresenter(noteModel);
         presenter.attachView(this);
@@ -65,5 +75,7 @@ public class MainActivity extends Activity {
     protected void onDestroy() {
         super.onDestroy();
         presenter.detachView();
+        dbHelper.close();
+        System.out.println("main8 onDestroy");
     }
 }

@@ -20,4 +20,5 @@ public class NoteData {
     public void setText(String text) {
         this.mText = text;
     }
+
 }
