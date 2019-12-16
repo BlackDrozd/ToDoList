@@ -22,7 +22,10 @@ public class NewNoteActivity extends Activity {
     private EditText editTextNoteDesc;
 
     private SingleOpenedViewPresenter presenter;
+
     DbHelper dbHelper;
+
+    NoteModel noteModel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,7 +39,7 @@ public class NewNoteActivity extends Activity {
         editTextNoteDesc = findViewById(R.id.note_text);
 
         dbHelper = new DbHelper(this);
-        NoteModel noteModel = new NoteModel(dbHelper);
+        noteModel = new NoteModel(dbHelper);
         presenter = new SingleOpenedViewPresenter(noteModel);
         presenter.attachView(this);
         presenter.viewIsReady();

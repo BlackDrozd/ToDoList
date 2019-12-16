@@ -6,7 +6,6 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 
-import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -25,21 +24,25 @@ public class MainActivity extends Activity {
     NoteAdapter noteAdapter;
     private NotesPresenter presenter;
     DbHelper dbHelper;
+    NoteModel noteModel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.start_activity);
         init();
-
-        System.out.println("main8 onCreate");
     }
 
     @Override
-    protected void onSaveInstanceState(@NonNull Bundle outState) {
-        super.onSaveInstanceState(outState);
-        System.out.println("main8 onSave");
+    protected void onStart() {
+        super.onStart();
+        dbHelper = new DbHelper(this);
+        noteModel = new NoteModel(dbHelper);
+        presenter = new NotesPresenter(noteModel);
+        presenter.attachView(this);
+        presenter.viewIsReady();
     }
+
 
     private void init() {
         openNewNoteButton = findViewById(R.id.open_new_note);
@@ -59,12 +62,6 @@ public class MainActivity extends Activity {
         RecyclerView noteRecyclerView = findViewById(R.id.note_list);
         noteRecyclerView.setLayoutManager(layoutManager);
         noteRecyclerView.setAdapter(noteAdapter);
-
-        dbHelper = new DbHelper(this);
-        NoteModel noteModel = new NoteModel(dbHelper);
-        presenter = new NotesPresenter(noteModel);
-        presenter.attachView(this);
-        presenter.viewIsReady();
     }
 
     public void showNotes(List<Note> notes){
@@ -76,6 +73,5 @@ public class MainActivity extends Activity {
         super.onDestroy();
         presenter.detachView();
         dbHelper.close();
-        System.out.println("main8 onDestroy");
     }
 }
