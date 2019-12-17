@@ -1,26 +1,41 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:minHeight="@dimen/item_min_height"
-    android:maxHeight="@dimen/item_height"
+    android:layout_marginBottom="8dp"
     android:background="@drawable/default_border"
-    android:padding="@dimen/default_padding"
-    android:layout_marginBottom="8dp">
+    android:maxHeight="@dimen/item_max_height"
+    android:minHeight="@dimen/item_min_height"
+    android:padding="@dimen/default_padding">
 
     <TextView
         android:id="@+id/item_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        tools:text="note's title"
-        android:textColor="@color/colorTitle"/>
+        android:textColor="@color/colorTitle"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="note's title" />
 
     <TextView
         android:id="@+id/item_desc"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        tools:text="note's text"/>
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/item_title"
+        android:layout_marginTop="8dp"
+        tools:text="note's text" />
 
-</LinearLayout>
+    <ImageButton
+        android:id="@+id/delete_note"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        android:src="@drawable/ic_delete_black_24dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginTop="12dp"
+        android:contentDescription="@string/button_delete_note_desc"/>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

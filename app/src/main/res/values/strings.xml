@@ -7,4 +7,5 @@
     <string name="open_new_note_btn">create new note</string>
     <string name="empty_values">Empty values</string>
     <string name="note_added_toast">Note is added</string>
+    <string name="button_delete_note_desc">button delete note</string>
 </resources>
