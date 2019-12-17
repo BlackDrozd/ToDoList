@@ -3,9 +3,7 @@ package com.android.todolist;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
-import android.widget.ImageButton;
 
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -23,13 +21,21 @@ public class MainActivity extends Activity implements NoteAdapter.OnNoteListener
 
     private static final String TAG = "MainActivity";
 
-    ImageButton deleteButton;
     FloatingActionButton openNewNoteButton;
     LinearLayoutManager layoutManager;
     NoteAdapter noteAdapter;
     private NotesPresenter presenter;
     DbHelper dbHelper;
     NoteModel noteModel;
+
+    public void showNotes(List<Note> notes){
+        noteAdapter.setData(notes);
+    }
+
+    @Override
+    public void onNoteClick(int position) {
+        presenter.openNote(position, noteAdapter.getData());
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,6 +54,12 @@ public class MainActivity extends Activity implements NoteAdapter.OnNoteListener
         presenter.viewIsReady();
     }
 
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        presenter.detachView();
+        dbHelper.close();
+    }
 
     private void init() {
         openNewNoteButton = findViewById(R.id.open_new_note);
@@ -67,26 +79,5 @@ public class MainActivity extends Activity implements NoteAdapter.OnNoteListener
         RecyclerView noteRecyclerView = findViewById(R.id.note_list);
         noteRecyclerView.setLayoutManager(layoutManager);
         noteRecyclerView.setAdapter(noteAdapter);
-    }
-
-    public void showNotes(List<Note> notes){
-        noteAdapter.setData(notes);
-    }
-
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        presenter.detachView();
-        dbHelper.close();
-    }
-
-    @Override
-    public void onNoteClick(int position) {
-
-        Log.d(TAG, "pos="+position);
-        //mNotes.get(position)
-       // Intent intent = new Intent(this, NewNoteActivity.class);
-       // intent.putExtra("selectedNote",mNotes.get(position));
-       // startActivity(intent);
     }
 }

@@ -1,5 +1,7 @@
 package com.android.todolist.common;
 
+import androidx.annotation.NonNull;
+
 public class Note {
 
     private long mId;
@@ -28,5 +30,11 @@ public class Note {
 
     public void setText(String text) {
         this.mText = text;
+    }
+
+    @NonNull
+    @Override
+    public String toString() {
+        return getClass().getName() + String.format(": id = %s, title = %s , text = %s", mId, mTitle, mText) ;
     }
 }

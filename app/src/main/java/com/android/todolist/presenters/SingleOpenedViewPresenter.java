@@ -14,7 +14,10 @@ public class SingleOpenedViewPresenter {
 
     private NewNoteActivity singleNoteView;
 
+    private NoteData noteData;
+
     private final NoteModel mNoteModel;
+
 
     public SingleOpenedViewPresenter(NoteModel model){ mNoteModel = model;}
 
@@ -26,7 +29,7 @@ public class SingleOpenedViewPresenter {
     }
 
     public void add() {
-        NoteData noteData = singleNoteView.getNoteData();
+        noteData  = singleNoteView.getNoteData();
         ContentValues cv = new ContentValues(2);
         cv.put(NoteTable.COLUMN.TITLE, noteData.getTitle());
         cv.put(NoteTable.COLUMN.NOTE_TEXT, noteData.getText());

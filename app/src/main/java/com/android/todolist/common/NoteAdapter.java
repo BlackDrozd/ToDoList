@@ -51,6 +51,10 @@ public class NoteAdapter extends RecyclerView.Adapter<NoteAdapter.NoteHolder> {
         notifyDataSetChanged();
     }
 
+    public List<Note> getData(){
+        return mNotes;
+    }
+
     static class NoteHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
         TextView title;
