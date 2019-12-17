@@ -51,7 +51,7 @@ public class NewNoteActivity extends Activity {
             }
         });
 
-        noteAdapter = new NoteAdapter();
+      //  noteAdapter = new NoteAdapter(this);
 
     }
 
@@ -73,6 +73,7 @@ public class NewNoteActivity extends Activity {
         presenter.detachView();
         dbHelper.close();
     }
+
 
 
 }

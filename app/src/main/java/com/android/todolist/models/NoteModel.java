@@ -31,7 +31,6 @@ public class NoteModel {
         addUserTask.execute(contentValues);
     }
 
-
     public interface LoadNoteCallback {
         void onLoad(List<Note> notes);
     }
@@ -99,6 +98,5 @@ public class NoteModel {
             }
         }
     }
-
 
 }

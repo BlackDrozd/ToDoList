@@ -15,46 +15,68 @@ import java.util.List;
 
 public class NoteAdapter extends RecyclerView.Adapter<NoteAdapter.NoteHolder> {
 
-    List<Note> data = new ArrayList<>();
+    private List<Note> mNotes = new ArrayList<>();
+    private OnNoteListener mOnNoteListener;
+
+    public NoteAdapter(OnNoteListener onNoteListener){
+        mOnNoteListener = onNoteListener;
+    }
+
+//    public NoteAdapter(ArrayList<Note> notes, OnNoteListener onNoteListener){
+//        mNotes = notes;
+//        mOnNoteListener = onNoteListener;
+//    }
+
 
     @NonNull
     @Override
     public NoteAdapter.NoteHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.note_item, parent, false);
-        return new NoteHolder(view);
+        return new NoteHolder(view, mOnNoteListener);
     }
 
     @Override
     public void onBindViewHolder(@NonNull NoteAdapter.NoteHolder holder, int position) {
-        holder.bind(data.get(position));
+        holder.bind(mNotes.get(position));
     }
 
     @Override
     public int getItemCount() {
-        return data.size();
+        return mNotes.size();
     }
 
     public void setData(List<Note> notes){
-        data.clear();
-        data.addAll(notes);
+        mNotes.clear();
+        mNotes.addAll(notes);
         notifyDataSetChanged();
     }
 
-    static class NoteHolder extends RecyclerView.ViewHolder {
+    static class NoteHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
         TextView title;
         TextView desc;
+        OnNoteListener onNoteListener;
 
-        public NoteHolder(View itemView){
+        NoteHolder(View itemView, OnNoteListener onNoteListener){
             super(itemView);
             title = itemView.findViewById(R.id.item_title);
             desc = itemView.findViewById(R.id.item_desc);
-
+            itemView.setOnClickListener(this);
+            this.onNoteListener = onNoteListener;
         }
 
         void bind(Note note){
             title.setText(note.getTitle());
             desc.setText(note.getText());
         }
+
+        @Override
+        public void onClick(View v) {
+            onNoteListener.onNoteClick(getAdapterPosition());
+        }
+    }
+
+    public interface OnNoteListener{
+        void onNoteClick(int position);
     }
 }

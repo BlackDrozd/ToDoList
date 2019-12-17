@@ -3,7 +3,9 @@ package com.android.todolist;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
+import android.widget.ImageButton;
 
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -17,8 +19,11 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.List;
 
-public class MainActivity extends Activity {
+public class MainActivity extends Activity implements NoteAdapter.OnNoteListener{
 
+    private static final String TAG = "MainActivity";
+
+    ImageButton deleteButton;
     FloatingActionButton openNewNoteButton;
     LinearLayoutManager layoutManager;
     NoteAdapter noteAdapter;
@@ -58,7 +63,7 @@ public class MainActivity extends Activity {
         });
 
         layoutManager = new LinearLayoutManager(this);
-        noteAdapter = new NoteAdapter();
+        noteAdapter = new NoteAdapter(this);
         RecyclerView noteRecyclerView = findViewById(R.id.note_list);
         noteRecyclerView.setLayoutManager(layoutManager);
         noteRecyclerView.setAdapter(noteAdapter);
@@ -73,5 +78,15 @@ public class MainActivity extends Activity {
         super.onDestroy();
         presenter.detachView();
         dbHelper.close();
+    }
+
+    @Override
+    public void onNoteClick(int position) {
+
+        Log.d(TAG, "pos="+position);
+        //mNotes.get(position)
+       // Intent intent = new Intent(this, NewNoteActivity.class);
+       // intent.putExtra("selectedNote",mNotes.get(position));
+       // startActivity(intent);
     }
 }
