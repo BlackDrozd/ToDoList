@@ -3,14 +3,19 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="@dimen/item_height"
-    android:gravity="center">
+    android:layout_height="wrap_content"
+    android:minHeight="@dimen/item_min_height"
+    android:maxHeight="@dimen/item_height"
+    android:background="@drawable/default_border"
+    android:padding="@dimen/default_padding"
+    android:layout_marginBottom="8dp">
 
     <TextView
         android:id="@+id/item_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        tools:text="note's title"/>
+        tools:text="note's title"
+        android:textColor="@color/colorTitle"/>
 
     <TextView
         android:id="@+id/item_desc"
