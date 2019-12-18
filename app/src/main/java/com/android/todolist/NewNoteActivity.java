@@ -1,6 +1,7 @@
 package com.android.todolist;
 
 import android.app.Activity;
+import android.content.Context;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
@@ -23,6 +24,7 @@ public class NewNoteActivity extends Activity {
 
     private SingleOpenedViewPresenter presenter;
 
+    private Context mContext;
 
     DbHelper dbHelper;
     NoteModel noteModel;
@@ -33,7 +35,7 @@ public class NewNoteActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_new_note);
-
+        mContext = getApplicationContext();
 
        // Log.d(TAG, "onCreate: mId" + getIntent().getExtras().getLong("noteId"));
 
@@ -41,6 +43,7 @@ public class NewNoteActivity extends Activity {
     }
 
     private void init() {
+
         editTextTitle = findViewById(R.id.note_title);
         editTextNoteDesc = findViewById(R.id.note_text);
 
@@ -55,7 +58,7 @@ public class NewNoteActivity extends Activity {
         findViewById(R.id.add_note).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                presenter.add();
+                presenter.add(mContext);
             }
         });
 
