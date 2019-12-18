@@ -22,12 +22,6 @@ public class NoteAdapter extends RecyclerView.Adapter<NoteAdapter.NoteHolder> {
         mOnNoteListener = onNoteListener;
     }
 
-//    public NoteAdapter(ArrayList<Note> notes, OnNoteListener onNoteListener){
-//        mNotes = notes;
-//        mOnNoteListener = onNoteListener;
-//    }
-
-
     @NonNull
     @Override
     public NoteAdapter.NoteHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {

@@ -23,14 +23,20 @@ public class NewNoteActivity extends Activity {
 
     private SingleOpenedViewPresenter presenter;
 
-    DbHelper dbHelper;
 
+    DbHelper dbHelper;
     NoteModel noteModel;
+
+    private Integer noteId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_new_note);
+
+
+       // Log.d(TAG, "onCreate: mId" + getIntent().getExtras().getLong("noteId"));
+
         init();
     }
 
@@ -42,7 +48,9 @@ public class NewNoteActivity extends Activity {
         noteModel = new NoteModel(dbHelper);
         presenter = new SingleOpenedViewPresenter(noteModel);
         presenter.attachView(this);
-        presenter.viewIsReady();
+        String viewAction = getIntent().getAction();
+        presenter.viewIsReady(viewAction);
+
 
         findViewById(R.id.add_note).setOnClickListener(new View.OnClickListener() {
             @Override
@@ -50,8 +58,6 @@ public class NewNoteActivity extends Activity {
                 presenter.add();
             }
         });
-
-      //  noteAdapter = new NoteAdapter(this);
 
     }
 

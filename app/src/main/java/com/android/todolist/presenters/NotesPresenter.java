@@ -1,9 +1,12 @@
 package com.android.todolist.presenters;
 
-import android.util.Log;
+import android.content.Context;
+import android.content.Intent;
 
 import com.android.todolist.MainActivity;
+import com.android.todolist.NewNoteActivity;
 import com.android.todolist.common.Note;
+import com.android.todolist.common.OpenNoteMode;
 import com.android.todolist.data.NoteData;
 import com.android.todolist.models.NoteModel;
 
@@ -30,12 +33,12 @@ public class NotesPresenter {
     public void deleteNote(int position){
     }
 
-    public void openNote(int position, List<Note> notes){
-       Note selectedNote = notes.get(position);
-        Log.d(TAG,selectedNote.toString());
-        // Intent intent = new Intent(this, NewNoteActivity.class);
-        // intent.putExtra("selectedNote",mNotes.get(position));
-        // startActivity(intent);
+    public void openNote(int position, List<Note> notes, Context context){
+        Note selectedNote = notes.get(position);
+        Intent intent = new Intent(context, NewNoteActivity.class);
+        intent.setAction(OpenNoteMode.EDIT_NOTE.toString());
+        intent.putExtra("noteId", selectedNote.getId());
+        context.startActivity(intent);
     }
 
     private void loadAllNotes() {

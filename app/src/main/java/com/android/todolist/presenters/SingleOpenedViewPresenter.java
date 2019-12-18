@@ -1,9 +1,15 @@
 package com.android.todolist.presenters;
 
 import android.content.ContentValues;
+import android.content.Context;
+import android.content.Intent;
+import android.util.Log;
+
+import androidx.annotation.NonNull;
 
 import com.android.todolist.NewNoteActivity;
 import com.android.todolist.R;
+import com.android.todolist.common.OpenNoteMode;
 import com.android.todolist.data.NoteData;
 import com.android.todolist.data.db.NoteTable;
 import com.android.todolist.models.NoteModel;
@@ -25,7 +31,8 @@ public class SingleOpenedViewPresenter {
 
     public void detachView() { singleNoteView = null; }
 
-    public void viewIsReady() {
+    public void viewIsReady(@NonNull String viewAction) {
+        Log.d(TAG, "action="+viewAction);
     }
 
     public void add() {
@@ -40,4 +47,12 @@ public class SingleOpenedViewPresenter {
             }
         });
     }
+
+    public void openNewNote(Context context) {
+        Intent intent = new Intent(context, NewNoteActivity.class);
+        intent.setAction(OpenNoteMode.CREATE_NEW_NOTE.toString());
+        intent.putExtra("noteId", "");
+        context.startActivity(intent);
+    }
+
 }
