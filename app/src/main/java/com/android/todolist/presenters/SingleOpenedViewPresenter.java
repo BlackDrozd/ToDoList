@@ -11,6 +11,7 @@ import androidx.fragment.app.FragmentActivity;
 import com.android.todolist.MainActivity;
 import com.android.todolist.NewNoteActivity;
 import com.android.todolist.R;
+import com.android.todolist.common.Note;
 import com.android.todolist.common.OpenNoteMode;
 import com.android.todolist.data.NoteData;
 import com.android.todolist.data.db.NoteTable;
@@ -56,10 +57,12 @@ public class SingleOpenedViewPresenter {
             }
             else if(viewAction.equals(OpenNoteMode.EDIT_NOTE.getMode())){
                 Long noteId = intent.getExtras().getLong("noteId");
+                Note note = loadNoteById(noteId);
                 activity.getSupportFragmentManager()
                         .beginTransaction()
-                        .add(R.id.root_layout, mEditNoteFragment.newInstance())
+                        .add(R.id.root_layout, mEditNoteFragment.newInstance(note))
                         .commit();
+
             }
 
     }
@@ -88,6 +91,10 @@ public class SingleOpenedViewPresenter {
         intent.setAction(OpenNoteMode.CREATE_NEW_NOTE.toString());
         intent.putExtra("noteId", "");
         context.startActivity(intent);
+    }
+
+    public Note loadNoteById(@NonNull Long noteId){
+        return mNoteModel.loadNoteById(noteId);
     }
 
 }

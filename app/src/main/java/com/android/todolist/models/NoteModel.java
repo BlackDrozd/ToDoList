@@ -2,6 +2,7 @@ package com.android.todolist.models;
 
 import android.content.ContentValues;
 import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.AsyncTask;
 
 import com.android.todolist.common.Note;
@@ -16,6 +17,7 @@ import java.util.concurrent.TimeUnit;
 public class NoteModel {
 
     private final DbHelper mDbHelper;
+    private SQLiteDatabase db;
 
     public NoteModel(DbHelper dbHelper){
         mDbHelper = dbHelper;
@@ -29,6 +31,23 @@ public class NoteModel {
     public void addNote(ContentValues contentValues, CompleteCallback callback) {
         AddNoteTask addUserTask = new AddNoteTask(callback);
         addUserTask.execute(contentValues);
+    }
+
+    public Note loadNoteById(Long noteId){
+        Note note = new Note();
+        String selection = "WHERE "+NoteTable.COLUMN.ID + " = ?";
+        String[] args = {Long.toString(noteId)};
+        db = mDbHelper.getReadableDatabase();
+       // Cursor cursor = db.query(NoteTable.TABLE,null, selection, args, null, null, null);
+        String query = "SELECT * FROM "+NoteTable.TABLE+" WHERE "+NoteTable.COLUMN.ID+" = ?";
+        Cursor cursor = db.rawQuery(query, args);
+        while (cursor.moveToNext()) {
+            note.setId(cursor.getLong(cursor.getColumnIndex(NoteTable.COLUMN.ID)));
+            note.setTitle(cursor.getString(cursor.getColumnIndex(NoteTable.COLUMN.TITLE)));
+            note.setText(cursor.getString(cursor.getColumnIndex(NoteTable.COLUMN.NOTE_TEXT)));
+        }
+        cursor.close();
+        return note;
     }
 
     public interface LoadNoteCallback {
