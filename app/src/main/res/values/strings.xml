@@ -8,5 +8,8 @@
     <string name="empty_values">Empty values</string>
     <string name="note_added_toast">Note is added</string>
     <string name="note_updated_toast">Note is updated</string>
+    <string name="note_deleted_toast">Note is deleted</string>
     <string name="button_delete_note_desc">button delete note</string>
+    <string name="edit_btn_title">edit</string>
+    <string name="delete_btn_title">delete</string>
 </resources>

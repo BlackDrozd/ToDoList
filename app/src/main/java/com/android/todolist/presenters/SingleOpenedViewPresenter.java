@@ -89,13 +89,15 @@ public class SingleOpenedViewPresenter {
         cv.put(NoteTable.COLUMN.TITLE, note.getTitle());
         cv.put(NoteTable.COLUMN.NOTE_TEXT, note.getText());
         final Intent intent = new Intent(context, MainActivity.class);
-        mNoteModel.addNote(cv, new NoteModel.CompleteCallback() {
-            @Override
-            public void onComplete() {
-                singleNoteView.showToast(R.string.note_updated_toast);
-                context.startActivity(intent);
-            }
-        });
+        singleNoteView.showToast(R.string.note_updated_toast);
+        context.startActivity(intent);
+    }
+
+    public void deleteNote(@NonNull final  Context context, @NonNull Long noteId){
+        deleteNoteById(noteId);
+        final Intent intent = new Intent(context, MainActivity.class);
+        singleNoteView.showToast(R.string.note_deleted_toast);
+        context.startActivity(intent);
     }
 
     public void openNewNote(@NonNull  Context context) {
@@ -111,6 +113,10 @@ public class SingleOpenedViewPresenter {
 
     public void updateNote(@NonNull Note note){
         mNoteModel.updateNote(note);
+    }
+
+    public void deleteNoteById(Long noteId){
+        mNoteModel.deleteNote(noteId);
     }
 
 }

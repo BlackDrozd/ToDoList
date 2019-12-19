@@ -66,11 +66,19 @@ public class EditNoteFragment extends Fragment {
         noteModel = new NoteModel(dbHelper);
         mSingleOpenedViewPresenter = new SingleOpenedViewPresenter(noteModel);
         mSingleOpenedViewPresenter.attachView(activity);
+        final Long noteId = Long.valueOf(getArguments().getString(ARG_ID));
 
         view.findViewById(R.id.edit_note).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 mSingleOpenedViewPresenter.editNote(context);
+            }
+        });
+
+        view.findViewById(R.id.delete_note).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mSingleOpenedViewPresenter.deleteNote(context, noteId);
             }
         });
     }

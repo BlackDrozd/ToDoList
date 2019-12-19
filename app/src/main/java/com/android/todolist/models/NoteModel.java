@@ -59,6 +59,11 @@ public class NoteModel {
         db.update(NoteTable.TABLE, newValues,where,null );
     }
 
+    public void deleteNote(@NonNull Long noteId){
+        String where = NoteTable.COLUMN.ID + "=" + noteId;
+        db.delete(NoteTable.TABLE, where,  null);
+    }
+
     public interface LoadNoteCallback {
         void onLoad(List<Note> notes);
     }
