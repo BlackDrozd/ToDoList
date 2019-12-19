@@ -5,6 +5,8 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.AsyncTask;
 
+import androidx.annotation.NonNull;
+
 import com.android.todolist.common.Note;
 import com.android.todolist.data.db.DbHelper;
 import com.android.todolist.data.db.NoteTable;
@@ -21,6 +23,7 @@ public class NoteModel {
 
     public NoteModel(DbHelper dbHelper){
         mDbHelper = dbHelper;
+        db = mDbHelper.getReadableDatabase();
     }
 
     public void loadNotes(LoadNoteCallback callback) {
@@ -33,12 +36,9 @@ public class NoteModel {
         addUserTask.execute(contentValues);
     }
 
-    public Note loadNoteById(Long noteId){
+    public Note loadNoteById(@NonNull Long noteId){
         Note note = new Note();
-        String selection = "WHERE "+NoteTable.COLUMN.ID + " = ?";
         String[] args = {Long.toString(noteId)};
-        db = mDbHelper.getReadableDatabase();
-       // Cursor cursor = db.query(NoteTable.TABLE,null, selection, args, null, null, null);
         String query = "SELECT * FROM "+NoteTable.TABLE+" WHERE "+NoteTable.COLUMN.ID+" = ?";
         Cursor cursor = db.rawQuery(query, args);
         while (cursor.moveToNext()) {
@@ -48,6 +48,15 @@ public class NoteModel {
         }
         cursor.close();
         return note;
+    }
+
+    public void updateNote(@NonNull Note note){
+
+        ContentValues newValues = new ContentValues();
+        newValues.put(NoteTable.COLUMN.TITLE, note.getTitle());
+        newValues.put(NoteTable.COLUMN.NOTE_TEXT, note.getText());
+        String where = NoteTable.COLUMN.ID + "=" + note.getId();
+        db.update(NoteTable.TABLE, newValues,where,null );
     }
 
     public interface LoadNoteCallback {

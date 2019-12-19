@@ -83,7 +83,19 @@ public class SingleOpenedViewPresenter {
     }
 
     public void editNote(@NonNull final Context context){
-
+        Note note  = singleNoteView.getEditedNote();
+        updateNote(note);
+        ContentValues cv = new ContentValues(2);
+        cv.put(NoteTable.COLUMN.TITLE, note.getTitle());
+        cv.put(NoteTable.COLUMN.NOTE_TEXT, note.getText());
+        final Intent intent = new Intent(context, MainActivity.class);
+        mNoteModel.addNote(cv, new NoteModel.CompleteCallback() {
+            @Override
+            public void onComplete() {
+                singleNoteView.showToast(R.string.note_updated_toast);
+                context.startActivity(intent);
+            }
+        });
     }
 
     public void openNewNote(@NonNull  Context context) {
@@ -95,6 +107,10 @@ public class SingleOpenedViewPresenter {
 
     public Note loadNoteById(@NonNull Long noteId){
         return mNoteModel.loadNoteById(noteId);
+    }
+
+    public void updateNote(@NonNull Note note){
+        mNoteModel.updateNote(note);
     }
 
 }

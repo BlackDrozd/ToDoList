@@ -4,14 +4,17 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.android.todolist.common.Note;
 import com.android.todolist.common.NoteAdapter;
 import com.android.todolist.data.NoteData;
 import com.android.todolist.data.db.DbHelper;
 import com.android.todolist.fragments.CreateNewNoteFragment;
+import com.android.todolist.fragments.EditNoteFragment;
 import com.android.todolist.models.NoteModel;
 import com.android.todolist.presenters.SingleOpenedViewPresenter;
 
@@ -58,6 +61,19 @@ public class NewNoteActivity extends AppCompatActivity {
         noteData.setText(text);
         return noteData;
 
+    }
+
+    public Note getEditedNote(){
+        EditNoteFragment fragment;
+        fragment = (EditNoteFragment) getSupportFragmentManager().findFragmentById(R.id.root_layout);
+        String title = ((EditText)fragment.getView().findViewById(R.id.note_title)).getText().toString();
+        String text = ((EditText)fragment.getView().findViewById(R.id.note_text)).getText().toString();
+        String id = ((TextView)fragment.getView().findViewById(R.id.note_id)).getText().toString();
+        Note note = new Note();
+        note.setTitle(title);
+        note.setText(text);
+        note.setId(Long.parseLong(id));
+        return note;
     }
 
     public void showToast(int resId) {

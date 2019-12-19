@@ -24,6 +24,7 @@ public class EditNoteFragment extends Fragment {
 
     private static final String ARG_TITLE = "noteTitle";
     private static final String ARG_TEXT = "noteText";
+    private static final String ARG_ID = "noteId";
 
     private DbHelper dbHelper;
     private NoteModel noteModel;
@@ -37,6 +38,7 @@ public class EditNoteFragment extends Fragment {
         Bundle args = new Bundle();
         args.putString(ARG_TITLE, mNote.getTitle());
         args.putString(ARG_TEXT, mNote.getText());
+        args.putString(ARG_ID, Long.toString(mNote.getId()));
         EditNoteFragment fragment = new EditNoteFragment();
         fragment.setArguments(args);
         return fragment;
@@ -48,6 +50,7 @@ public class EditNoteFragment extends Fragment {
        LinearLayout root = (LinearLayout) inflater.inflate(R.layout.edit_note_fragment, container, false);
         ((TextView)root.findViewById(R.id.note_title)).setText(getArguments().getString(ARG_TITLE));
         ((TextView)root.findViewById(R.id.note_text)).setText(getArguments().getString(ARG_TEXT));
+        ((TextView)root.findViewById(R.id.note_id)).setText(getArguments().getString(ARG_ID));
        return root;
     }
 
