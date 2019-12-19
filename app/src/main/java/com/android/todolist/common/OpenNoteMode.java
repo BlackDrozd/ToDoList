@@ -22,4 +22,6 @@ public enum OpenNoteMode {
     public String toString() {
         return this.mode;
     }
+
+
 }

@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.util.Log;
 
 import androidx.annotation.NonNull;
+import androidx.fragment.app.FragmentActivity;
 
 import com.android.todolist.MainActivity;
 import com.android.todolist.NewNoteActivity;
@@ -13,6 +14,8 @@ import com.android.todolist.R;
 import com.android.todolist.common.OpenNoteMode;
 import com.android.todolist.data.NoteData;
 import com.android.todolist.data.db.NoteTable;
+import com.android.todolist.fragments.CreateNewNoteFragment;
+import com.android.todolist.fragments.EditNoteFragment;
 import com.android.todolist.models.NoteModel;
 
 public class SingleOpenedViewPresenter {
@@ -25,6 +28,9 @@ public class SingleOpenedViewPresenter {
 
     private final NoteModel mNoteModel;
 
+    private CreateNewNoteFragment mCreateNewNoteFragment;
+    private EditNoteFragment mEditNoteFragment;
+
 
     public SingleOpenedViewPresenter(NoteModel model){ mNoteModel = model;}
 
@@ -32,8 +38,30 @@ public class SingleOpenedViewPresenter {
 
     public void detachView() { singleNoteView = null; }
 
-    public void viewIsReady(@NonNull String viewAction) {
-        Log.d(TAG, "action="+viewAction);
+    public void viewIsReady(@NonNull Intent intent, FragmentActivity activity) {
+
+        String viewAction = null;
+        try {
+            viewAction = intent.getAction();
+        }
+        catch(NullPointerException e) {
+            Log.d(TAG, "viewAction is null");
+        }
+
+        if(viewAction.equals(OpenNoteMode.CREATE_NEW_NOTE.getMode())){
+                activity.getSupportFragmentManager()
+                        .beginTransaction()
+                        .add(R.id.root_layout, mCreateNewNoteFragment.newInstance())
+                        .commit();
+            }
+            else if(viewAction.equals(OpenNoteMode.EDIT_NOTE.getMode())){
+                Long noteId = intent.getExtras().getLong("noteId");
+                activity.getSupportFragmentManager()
+                        .beginTransaction()
+                        .add(R.id.root_layout, mEditNoteFragment.newInstance())
+                        .commit();
+            }
+
     }
 
     public void add(@NonNull final Context context) {
@@ -49,6 +77,10 @@ public class SingleOpenedViewPresenter {
                 context.startActivity(intent);
             }
         });
+    }
+
+    public void editNote(@NonNull final Context context){
+
     }
 
     public void openNewNote(@NonNull  Context context) {

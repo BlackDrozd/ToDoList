@@ -1,75 +1,63 @@
 package com.android.todolist;
 
-import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
-import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.android.todolist.common.NoteAdapter;
 import com.android.todolist.data.NoteData;
 import com.android.todolist.data.db.DbHelper;
+import com.android.todolist.fragments.CreateNewNoteFragment;
 import com.android.todolist.models.NoteModel;
 import com.android.todolist.presenters.SingleOpenedViewPresenter;
 
-public class NewNoteActivity extends Activity {
+public class NewNoteActivity extends AppCompatActivity {
 
+    //region declaration of fields
     private static final String TAG = "NewNoteActivity";
 
     private NoteAdapter noteAdapter;
 
-    private EditText editTextTitle;
-    private EditText editTextNoteDesc;
-
     private SingleOpenedViewPresenter presenter;
 
     private Context mContext;
-
     DbHelper dbHelper;
     NoteModel noteModel;
-
-    private Integer noteId;
+    //endregion
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_new_note);
         mContext = getApplicationContext();
-
-       // Log.d(TAG, "onCreate: mId" + getIntent().getExtras().getLong("noteId"));
-
         init();
     }
 
     private void init() {
-
-        editTextTitle = findViewById(R.id.note_title);
-        editTextNoteDesc = findViewById(R.id.note_text);
-
-        dbHelper = new DbHelper(this);
+        Intent intent = getIntent();
+        dbHelper = new DbHelper(mContext);
         noteModel = new NoteModel(dbHelper);
         presenter = new SingleOpenedViewPresenter(noteModel);
-        presenter.attachView(this);
-        String viewAction = getIntent().getAction();
-        presenter.viewIsReady(viewAction);
-
-
-        findViewById(R.id.add_note).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                presenter.add(mContext);
-            }
-        });
+        presenter.viewIsReady(intent, this);
 
     }
 
 
     public NoteData getNoteData() {
+
+        CreateNewNoteFragment fragment;
+        fragment = (CreateNewNoteFragment)  getSupportFragmentManager().findFragmentById(R.id.root_layout);
+        String title = ((EditText)fragment.getView().findViewById(R.id.note_title)).getText().toString();
+        String text = ((EditText)fragment.getView().findViewById(R.id.note_text)).getText().toString();
         NoteData noteData = new NoteData();
-        noteData.setTitle(editTextTitle.getText().toString());
-        noteData.setText(editTextNoteDesc.getText().toString());
+        noteData.setTitle(title);
+        noteData.setText(text);
         return noteData;
+
     }
 
     public void showToast(int resId) {
