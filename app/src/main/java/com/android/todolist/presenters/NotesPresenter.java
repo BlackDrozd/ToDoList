@@ -7,7 +7,6 @@ import com.android.todolist.MainActivity;
 import com.android.todolist.NewNoteActivity;
 import com.android.todolist.common.Note;
 import com.android.todolist.common.OpenNoteMode;
-import com.android.todolist.data.NoteData;
 import com.android.todolist.models.NoteModel;
 
 import java.util.List;
@@ -18,8 +17,6 @@ public class NotesPresenter {
 
     private MainActivity startView;
 
-    private NoteData noteData;
-
     private final NoteModel mNoteModel;
 
     public NotesPresenter(NoteModel model){ mNoteModel = model;}
@@ -29,9 +26,6 @@ public class NotesPresenter {
     public void detachView() { startView = null; }
 
     public void viewIsReady() { loadAllNotes();}
-
-    public void deleteNote(int position){
-    }
 
     public void openNote(int position, List<Note> notes, Context context){
         Note selectedNote = notes.get(position);

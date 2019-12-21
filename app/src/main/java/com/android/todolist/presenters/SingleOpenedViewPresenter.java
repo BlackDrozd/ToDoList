@@ -1,17 +1,12 @@
 package com.android.todolist.presenters;
 
 import android.content.ContentValues;
-import android.content.Context;
-import android.content.Intent;
 
 import androidx.annotation.NonNull;
 
-import com.android.todolist.MainActivity;
 import com.android.todolist.NewNoteActivity;
 import com.android.todolist.R;
 import com.android.todolist.common.Note;
-import com.android.todolist.common.OpenNoteMode;
-import com.android.todolist.data.NoteData;
 import com.android.todolist.data.db.NoteTable;
 import com.android.todolist.models.NoteModel;
 
@@ -21,8 +16,6 @@ public class SingleOpenedViewPresenter {
 
     private NewNoteActivity singleNoteView;
 
-    private NoteData noteData;
-
     private final NoteModel mNoteModel;
 
     public SingleOpenedViewPresenter(NoteModel model){ mNoteModel = model;}
@@ -31,58 +24,49 @@ public class SingleOpenedViewPresenter {
 
     public void detachView() { singleNoteView = null; }
 
-    public void viewIsReady() { }
+    public void onAddNoteButtonClicked() {
 
-    public void add(@NonNull final Context context) {
-        noteData  = singleNoteView.getNoteData();
-        ContentValues cv = new ContentValues(2);
-        cv.put(NoteTable.COLUMN.TITLE, noteData.getTitle());
-        cv.put(NoteTable.COLUMN.NOTE_TEXT, noteData.getText());
-        final Intent intent = new Intent(context, MainActivity.class);
-        mNoteModel.addNote(cv, new NoteModel.CompleteCallback() {
-            @Override
-            public void onComplete() {
-                singleNoteView.showToast(R.string.note_added_toast);
-                context.startActivity(intent);
-            }
-        });
+        String title = singleNoteView.getNoteTitle();
+        String text = singleNoteView.getNoteText();
+
+        if(title.isEmpty() || text.isEmpty()){
+            singleNoteView.showCreationError(R.string.error_note_is_empty);
+        }
+        else {
+
+            ContentValues cv = packToContentValues(title, text);
+
+            mNoteModel.addNote(cv, new NoteModel.CompleteCallback() {
+                @Override
+                public void onComplete() {
+                    singleNoteView.showToast(R.string.note_added_toast);
+                    singleNoteView.startMainActivity();
+                }
+            });
+        }
     }
 
-    public void editNote(@NonNull final Context context){
+    private ContentValues packToContentValues(String title, String text) {
+        ContentValues cv = new ContentValues(2);
+        cv.put(NoteTable.COLUMN.TITLE, title);
+        cv.put(NoteTable.COLUMN.NOTE_TEXT, text);
+        return cv;
+    }
+
+    public void editNote(){
         Note note  = singleNoteView.getEditedNote();
         updateNote(note);
-        ContentValues cv = new ContentValues(2);
-        cv.put(NoteTable.COLUMN.TITLE, note.getTitle());
-        cv.put(NoteTable.COLUMN.NOTE_TEXT, note.getText());
-        final Intent intent = new Intent(context, MainActivity.class);
         singleNoteView.showToast(R.string.note_updated_toast);
-        context.startActivity(intent);
+        singleNoteView.startMainActivity();
     }
 
-    public void deleteNote(@NonNull final  Context context, @NonNull Long noteId){
-        deleteNoteById(noteId);
-        final Intent intent = new Intent(context, MainActivity.class);
+    public void deleteNote(@NonNull Long noteId){
+        mNoteModel.deleteNote(noteId);
         singleNoteView.showToast(R.string.note_deleted_toast);
-        context.startActivity(intent);
-    }
-
-    public void openNewNote(@NonNull  Context context) {
-        Intent intent = new Intent(context, NewNoteActivity.class);
-        intent.setAction(OpenNoteMode.CREATE_NEW_NOTE.toString());
-        intent.putExtra("noteId", "");
-        context.startActivity(intent);
-    }
-
-    public Note loadNoteById(@NonNull Long noteId){
-        return mNoteModel.loadNoteById(noteId);
+        singleNoteView.startMainActivity();
     }
 
     public void updateNote(@NonNull Note note){
         mNoteModel.updateNote(note);
     }
-
-    public void deleteNoteById(Long noteId){
-        mNoteModel.deleteNote(noteId);
-    }
-
 }

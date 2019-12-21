@@ -53,7 +53,7 @@ public class CreateNewNoteFragment extends Fragment {
         view.findViewById(R.id.add_note).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mSingleOpenedViewPresenter.add(context);
+                mSingleOpenedViewPresenter.onAddNoteButtonClicked();
             }
         });
     }

@@ -36,6 +36,8 @@ public class NoteModel {
         addUserTask.execute(contentValues);
     }
 
+
+
     public Note loadNoteById(@NonNull Long noteId){
         Note note = new Note();
         String[] args = {Long.toString(noteId)};

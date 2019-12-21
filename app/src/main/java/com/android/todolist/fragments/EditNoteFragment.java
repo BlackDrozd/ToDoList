@@ -71,14 +71,14 @@ public class EditNoteFragment extends Fragment {
         view.findViewById(R.id.edit_note).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mSingleOpenedViewPresenter.editNote(context);
+                mSingleOpenedViewPresenter.editNote();
             }
         });
 
         view.findViewById(R.id.delete_note).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mSingleOpenedViewPresenter.deleteNote(context, noteId);
+                mSingleOpenedViewPresenter.deleteNote(noteId);
             }
         });
     }

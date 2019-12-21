@@ -3,12 +3,14 @@ package com.android.todolist;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
 
 import com.android.todolist.common.Note;
 import com.android.todolist.common.NoteAdapter;
@@ -20,7 +22,7 @@ import com.android.todolist.fragments.EditNoteFragment;
 import com.android.todolist.models.NoteModel;
 import com.android.todolist.presenters.SingleOpenedViewPresenter;
 
-public class NewNoteActivity extends AppCompatActivity {
+public class NewNoteActivity extends AppCompatActivity implements OpenedNoteView{
 
     //region declaration of fields
     private static final String TAG = "NewNoteActivity";
@@ -31,6 +33,8 @@ public class NewNoteActivity extends AppCompatActivity {
 
     private CreateNewNoteFragment mCreateNewNoteFragment;
     private EditNoteFragment mEditNoteFragment;
+
+    private Fragment mFragment;
 
     private Context mContext;
     DbHelper dbHelper;
@@ -44,19 +48,34 @@ public class NewNoteActivity extends AppCompatActivity {
         setContentView(R.layout.activity_new_note);
         mContext = getApplicationContext();
         init();
+
+        Log.d(TAG,getSupportFragmentManager().getFragments().toString() );
+
     }
 
     public NoteData getNoteData() {
-
-        CreateNewNoteFragment fragment;
-        fragment = (CreateNewNoteFragment)  getSupportFragmentManager().findFragmentById(R.id.root_layout);
-        String title = ((EditText)fragment.getView().findViewById(R.id.note_title)).getText().toString();
-        String text = ((EditText)fragment.getView().findViewById(R.id.note_text)).getText().toString();
+        String title = getNoteTitle();
+        String text = getNoteText();
         NoteData noteData = new NoteData();
         noteData.setTitle(title);
         noteData.setText(text);
         return noteData;
 
+    }
+
+    public String getNoteTitle(){
+        CreateNewNoteFragment mFragment = (CreateNewNoteFragment)getSupportFragmentManager().findFragmentById(R.id.root_layout);
+        return ((EditText)mFragment.getView().findViewById(R.id.note_title)).getText().toString();
+    }
+
+    public String getNoteText(){
+        CreateNewNoteFragment mFragment = (CreateNewNoteFragment)getSupportFragmentManager().findFragmentById(R.id.root_layout);
+        return ((EditText)mFragment.getView().findViewById(R.id.note_text)).getText().toString();
+    }
+
+    @Override
+    public void showCreationError(int resId) {
+        showToast(resId);
     }
 
     public Note getEditedNote(){
@@ -72,8 +91,9 @@ public class NewNoteActivity extends AppCompatActivity {
         return note;
     }
 
-    public void showToast(int resId) {
-        Toast.makeText(this, resId, Toast.LENGTH_SHORT).show();
+    public void startMainActivity(){
+        final Intent intent = new Intent(this, MainActivity.class);
+        this.startActivity(intent);
     }
 
     @Override
@@ -89,6 +109,7 @@ public class NewNoteActivity extends AppCompatActivity {
         noteModel = new NoteModel(dbHelper);
         presenter = new SingleOpenedViewPresenter(noteModel);
         chooseFragment(intent);
+        mFragment = this.getSupportFragmentManager().findFragmentById(R.id.root_layout);
     }
 
     private void chooseFragment(@NonNull  Intent intent) {
@@ -110,6 +131,10 @@ public class NewNoteActivity extends AppCompatActivity {
                     .commit();
 
         }
+    }
+
+    public  void showToast(int resId) {
+        Toast.makeText(this, resId, Toast.LENGTH_SHORT).show();
     }
 
     private boolean isViewActionMatched(String action1, String action2) {

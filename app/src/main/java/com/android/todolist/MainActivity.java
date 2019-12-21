@@ -1,6 +1,7 @@
 package com.android.todolist;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -11,6 +12,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.android.todolist.common.Note;
 import com.android.todolist.common.NoteAdapter;
+import com.android.todolist.common.OpenNoteMode;
 import com.android.todolist.data.db.DbHelper;
 import com.android.todolist.models.NoteModel;
 import com.android.todolist.presenters.NotesPresenter;
@@ -19,7 +21,9 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.List;
 
-public class MainActivity extends AppCompatActivity implements NoteAdapter.OnNoteListener{
+public class MainActivity extends AppCompatActivity implements
+        StartView,
+        NoteAdapter.OnNoteListener{
 
     private static final String TAG = "MainActivity";
 
@@ -81,7 +85,10 @@ public class MainActivity extends AppCompatActivity implements NoteAdapter.OnNot
         openNewNoteButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                singleOpenedViewPresenter.openNewNote(mContext);
+                Intent intent = new Intent(mContext, NewNoteActivity.class);
+                intent.setAction(OpenNoteMode.CREATE_NEW_NOTE.toString());
+                intent.putExtra("noteId", "");
+                mContext.startActivity(intent);
             }
         });
 
