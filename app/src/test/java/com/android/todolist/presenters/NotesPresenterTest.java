@@ -7,9 +7,8 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
+import org.mockito.Mockito;
 import org.mockito.junit.MockitoJUnitRunner;
-
-import static org.junit.Assert.assertNotNull;
 
 @RunWith(MockitoJUnitRunner.class)
 public class NotesPresenterTest {
@@ -24,29 +23,20 @@ public class NotesPresenterTest {
 
     @Before
     public void setUp() throws Exception {
+        noteModel = Mockito.mock(NoteModel.class);
+        view  = Mockito.mock(MainActivity.class);
         presenter = new NotesPresenter(noteModel);
-        assertNotNull(presenter);
-    }
-
-    @Test
-    public void attachView() {
         presenter.attachView(view);
-    }
 
-    @Test
-    public void detachView() {
-        presenter.detachView();
     }
 
     @Test
     public void viewIsReady() {
+        presenter.viewIsReady();
     }
 
     @Test
-    public void deleteNote() {
-    }
-
-    @Test
-    public void openNote() {
+    public void detachView(){
+        presenter.detachView();
     }
 }

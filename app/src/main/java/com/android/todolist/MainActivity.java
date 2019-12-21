@@ -42,7 +42,8 @@ public class MainActivity extends AppCompatActivity implements
 
     @Override
     public void onNoteClick(int position) {
-        presenter.openNote(position, noteAdapter.getData(), getApplicationContext());
+        Note note = noteAdapter.getData().get(position);
+        startActivityEditMode(note);
     }
 
     @Override
@@ -97,5 +98,12 @@ public class MainActivity extends AppCompatActivity implements
         RecyclerView noteRecyclerView = findViewById(R.id.note_list);
         noteRecyclerView.setLayoutManager(layoutManager);
         noteRecyclerView.setAdapter(noteAdapter);
+    }
+
+    public void startActivityEditMode(Note note){
+        Intent intent = new Intent(this, NewNoteActivity.class);
+        intent.setAction(OpenNoteMode.EDIT_NOTE.toString());
+        intent.putExtra("noteId", note.getId());
+        this.startActivity(intent);
     }
 }

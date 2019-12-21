@@ -1,10 +1,8 @@
 package com.android.todolist.presenters;
 
 import com.android.todolist.NewNoteActivity;
-import com.android.todolist.OpenedNoteView;
 import com.android.todolist.R;
 import com.android.todolist.common.Note;
-import com.android.todolist.data.NoteData;
 import com.android.todolist.models.NoteModel;
 
 import org.junit.Before;
@@ -26,12 +24,6 @@ public class SingleOpenedViewPresenterTest {
 
     @Mock
     NewNoteActivity view;
-
-    @Mock
-    OpenedNoteView openedNoteView;
-
-    @Mock
-    NoteData noteData;
 
     @Mock
     Note mNote;
@@ -78,21 +70,8 @@ public class SingleOpenedViewPresenterTest {
     }
 
     @Test
-    public void openNewNote() {
-    }
-
-    @Test
-    public void loadNoteById() {
-    }
-
-    @Test
     public void updateNote() {
-
         noteModel.updateNote(mNote);
-    }
-
-    @Test
-    public void deleteNoteById() {
     }
 
     @Test
