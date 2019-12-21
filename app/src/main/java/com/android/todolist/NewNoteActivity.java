@@ -7,10 +7,12 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.android.todolist.common.Note;
 import com.android.todolist.common.NoteAdapter;
+import com.android.todolist.common.OpenNoteMode;
 import com.android.todolist.data.NoteData;
 import com.android.todolist.data.db.DbHelper;
 import com.android.todolist.fragments.CreateNewNoteFragment;
@@ -27,9 +29,13 @@ public class NewNoteActivity extends AppCompatActivity {
 
     private SingleOpenedViewPresenter presenter;
 
+    private CreateNewNoteFragment mCreateNewNoteFragment;
+    private EditNoteFragment mEditNoteFragment;
+
     private Context mContext;
     DbHelper dbHelper;
     NoteModel noteModel;
+    Intent intent;
     //endregion
 
     @Override
@@ -39,16 +45,6 @@ public class NewNoteActivity extends AppCompatActivity {
         mContext = getApplicationContext();
         init();
     }
-
-    private void init() {
-        Intent intent = getIntent();
-        dbHelper = new DbHelper(mContext);
-        noteModel = new NoteModel(dbHelper);
-        presenter = new SingleOpenedViewPresenter(noteModel);
-        presenter.viewIsReady(intent, this);
-
-    }
-
 
     public NoteData getNoteData() {
 
@@ -87,6 +83,38 @@ public class NewNoteActivity extends AppCompatActivity {
         dbHelper.close();
     }
 
+    private void init() {
+        intent = getIntent();
+        dbHelper = new DbHelper(mContext);
+        noteModel = new NoteModel(dbHelper);
+        presenter = new SingleOpenedViewPresenter(noteModel);
+        chooseFragment(intent);
+    }
 
+    private void chooseFragment(@NonNull  Intent intent) {
+
+        String viewAction = intent.getAction();
+
+        if(isViewActionMatched(viewAction, OpenNoteMode.CREATE_NEW_NOTE.getMode())){
+            this.getSupportFragmentManager()
+                    .beginTransaction()
+                    .add(R.id.root_layout, mCreateNewNoteFragment.newInstance())
+                    .commit();
+        }
+        else if(isViewActionMatched(viewAction, OpenNoteMode.EDIT_NOTE.getMode())){
+            Long noteId = intent.getExtras().getLong("noteId");
+            Note note = noteModel.loadNoteById(noteId);
+            this.getSupportFragmentManager()
+                    .beginTransaction()
+                    .add(R.id.root_layout, mEditNoteFragment.newInstance(note))
+                    .commit();
+
+        }
+    }
+
+    private boolean isViewActionMatched(String action1, String action2) {
+        if (action1.equals(action2)) return true;
+        return false;
+    }
 
 }

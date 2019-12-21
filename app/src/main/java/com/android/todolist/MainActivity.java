@@ -1,11 +1,11 @@
 package com.android.todolist;
 
-import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -19,7 +19,7 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.List;
 
-public class MainActivity extends Activity implements NoteAdapter.OnNoteListener{
+public class MainActivity extends AppCompatActivity implements NoteAdapter.OnNoteListener{
 
     private static final String TAG = "MainActivity";
 
