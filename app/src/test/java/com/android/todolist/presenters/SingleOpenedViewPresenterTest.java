@@ -1,5 +1,7 @@
 package com.android.todolist.presenters;
 
+import android.content.ContentValues;
+
 import com.android.todolist.NewNoteActivity;
 import com.android.todolist.R;
 import com.android.todolist.common.Note;
@@ -52,13 +54,15 @@ public class SingleOpenedViewPresenterTest {
         when(view.getNoteTitle()).thenReturn("title");
         when(view.getNoteText()).thenReturn("text");
         presenter.onAddNoteButtonClicked();
-       // verify(noteModel).addNote(cv,any()); как замокать анонимный класс?
+        ContentValues cv = new ContentValues();
+        verify(noteModel).addNote(cv,Mockito.mock(NoteModel.CompleteCallback.class));
     }
 
     @Test
     public void editNote() {
         when(view.getEditedNote()).thenReturn(mNote);
         presenter.editNote();
+        verify(view).getEditedNote();
         verify(view).showToast(R.string.note_updated_toast);
         verify(view).startMainActivity();
     }

@@ -4,9 +4,15 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
+import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -28,6 +34,7 @@ public class MainActivity extends AppCompatActivity implements
     private static final String TAG = "MainActivity";
 
     FloatingActionButton openNewNoteButton;
+    Toolbar toolbar;
     LinearLayoutManager layoutManager;
     NoteAdapter noteAdapter;
     private NotesPresenter presenter;
@@ -56,6 +63,31 @@ public class MainActivity extends AppCompatActivity implements
     }
 
     @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.menu_main, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        switch (item.getItemId()){
+            case R.id.delete_all_item:
+                Toast.makeText(this, "The page in develop yet =^__^=", Toast.LENGTH_SHORT).show();
+                return true;
+            case R.id.about_item:
+                Toast.makeText(this, "The page about in develop yet =^__^=", Toast.LENGTH_SHORT).show();
+                return true;
+            case R.id.settings_item:
+                Toast.makeText(this, "The page settings in develop yet =^__^=", Toast.LENGTH_SHORT).show();
+                return true;
+                default:
+                    return super.onOptionsItemSelected(item);
+        }
+
+    }
+
+    @Override
     protected void onResume() {
         Log.d(TAG, "onResume");
         super.onResume();
@@ -72,6 +104,9 @@ public class MainActivity extends AppCompatActivity implements
     }
 
     private void init() {
+
+        toolbar = findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
 
         dbHelper = new DbHelper(this);
         noteModel = new NoteModel(dbHelper);

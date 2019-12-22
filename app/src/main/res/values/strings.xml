@@ -14,4 +14,6 @@
     <string name="delete_btn_title">delete</string>
     <string name="error_title_is_empty">Title can\'t be empty</string>
     <string name="error_note_is_empty">Error: title or text is empty. Please, fill them.</string>
+    <string name="delete_all">удалить все</string>
+    <string name="about_programm">о программе</string>
 </resources>

@@ -53,6 +53,7 @@ public class SingleOpenedViewPresenter {
         return cv;
     }
 
+
     public void editNote(){
         Note note  = singleNoteView.getEditedNote();
         updateNote(note);
