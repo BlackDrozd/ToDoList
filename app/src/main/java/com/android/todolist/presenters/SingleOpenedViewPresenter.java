@@ -67,6 +67,10 @@ public class SingleOpenedViewPresenter {
         singleNoteView.startMainActivity();
     }
 
+    public void deleteNotes(){
+      mNoteModel.deleteNotes();
+    }
+
     public void updateNote(@NonNull Note note){
         mNoteModel.updateNote(note);
     }

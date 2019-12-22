@@ -36,8 +36,6 @@ public class NoteModel {
         addUserTask.execute(contentValues);
     }
 
-
-
     public Note loadNoteById(@NonNull Long noteId){
         Note note = new Note();
         String[] args = {Long.toString(noteId)};
@@ -64,6 +62,10 @@ public class NoteModel {
     public void deleteNote(@NonNull Long noteId){
         String where = NoteTable.COLUMN.ID + "=" + noteId;
         db.delete(NoteTable.TABLE, where,  null);
+    }
+
+    public void deleteNotes(){
+        db.delete(NoteTable.TABLE, null,  null);
     }
 
     public interface LoadNoteCallback {

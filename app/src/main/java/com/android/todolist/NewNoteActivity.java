@@ -6,10 +6,8 @@ import android.os.Bundle;
 import android.util.Log;
 import android.widget.EditText;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 
 import com.android.todolist.common.Note;
@@ -21,8 +19,9 @@ import com.android.todolist.fragments.CreateNewNoteFragment;
 import com.android.todolist.fragments.EditNoteFragment;
 import com.android.todolist.models.NoteModel;
 import com.android.todolist.presenters.SingleOpenedViewPresenter;
+import com.android.todolist.views.BaseActivity;
 
-public class NewNoteActivity extends AppCompatActivity implements OpenedNoteView{
+public class NewNoteActivity extends BaseActivity implements OpenedNoteView{
 
     //region declaration of fields
     private static final String TAG = "NewNoteActivity";
@@ -131,10 +130,6 @@ public class NewNoteActivity extends AppCompatActivity implements OpenedNoteView
                     .commit();
 
         }
-    }
-
-    public  void showToast(int resId) {
-        Toast.makeText(this, resId, Toast.LENGTH_SHORT).show();
     }
 
     private boolean isViewActionMatched(String action1, String action2) {

@@ -5,4 +5,5 @@
     <dimen name="item_min_height">20dp</dimen>
     <dimen name="default_border_radius">16dp</dimen>
     <dimen name="default_border_width">1dp</dimen>
+    <dimen name="recycler_marginTop">70dp</dimen>
 </resources>

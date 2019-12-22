@@ -8,10 +8,8 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -23,11 +21,12 @@ import com.android.todolist.data.db.DbHelper;
 import com.android.todolist.models.NoteModel;
 import com.android.todolist.presenters.NotesPresenter;
 import com.android.todolist.presenters.SingleOpenedViewPresenter;
+import com.android.todolist.views.BaseActivity;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.List;
 
-public class MainActivity extends AppCompatActivity implements
+public class MainActivity extends BaseActivity implements
         StartView,
         NoteAdapter.OnNoteListener{
 
@@ -73,13 +72,16 @@ public class MainActivity extends AppCompatActivity implements
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         switch (item.getItemId()){
             case R.id.delete_all_item:
-                Toast.makeText(this, "The page in develop yet =^__^=", Toast.LENGTH_SHORT).show();
+                presenter.deleteAllNotes();
+                //noteAdapter.notifyDataSetChanged();
+                initRecycler();
+                showToast(R.string.all_notes_deleted);
                 return true;
             case R.id.about_item:
-                Toast.makeText(this, "The page about in develop yet =^__^=", Toast.LENGTH_SHORT).show();
+                showToast(R.string.page_about_toast);
                 return true;
             case R.id.settings_item:
-                Toast.makeText(this, "The page settings in develop yet =^__^=", Toast.LENGTH_SHORT).show();
+                showToast(R.string.page_settings_toast);
                 return true;
                 default:
                     return super.onOptionsItemSelected(item);
@@ -128,6 +130,10 @@ public class MainActivity extends AppCompatActivity implements
             }
         });
 
+        initRecycler();
+    }
+
+    private void initRecycler() {
         layoutManager = new LinearLayoutManager(this);
         noteAdapter = new NoteAdapter(this);
         RecyclerView noteRecyclerView = findViewById(R.id.note_list);

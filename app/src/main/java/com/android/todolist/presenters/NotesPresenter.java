@@ -31,4 +31,8 @@ public class NotesPresenter {
         });
     }
 
+    public void deleteAllNotes(){
+        mNoteModel.deleteNotes();
+    }
+
 }
