@@ -73,7 +73,6 @@ public class MainActivity extends BaseActivity implements
         switch (item.getItemId()){
             case R.id.delete_all_item:
                 presenter.deleteAllNotes();
-                //noteAdapter.notifyDataSetChanged();
                 initRecycler();
                 showToast(R.string.all_notes_deleted);
                 return true;

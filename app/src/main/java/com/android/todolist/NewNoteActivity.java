@@ -4,6 +4,9 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.widget.EditText;
 import android.widget.TextView;
 
@@ -39,6 +42,7 @@ public class NewNoteActivity extends BaseActivity implements OpenedNoteView{
     DbHelper dbHelper;
     NoteModel noteModel;
     Intent intent;
+    String mViewAction;
     //endregion
 
     @Override
@@ -46,9 +50,42 @@ public class NewNoteActivity extends BaseActivity implements OpenedNoteView{
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_new_note);
         mContext = getApplicationContext();
+        mViewAction = getIntent().getAction();
         init();
-
         Log.d(TAG,getSupportFragmentManager().getFragments().toString() );
+
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        if(isViewActionMatched(mViewAction, OpenNoteMode.CREATE_NEW_NOTE.getMode())){
+            inflater.inflate(R.menu.menu_create_note, menu);
+        }
+        else{
+            inflater.inflate(R.menu.menu_edit_note, menu);
+        }
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+
+        Long noteId = intent.getExtras().getLong("noteId");
+
+        switch (item.getItemId()){
+            case R.id.edit_note:
+                presenter.editNote();
+                return true;
+            case R.id.delete_note:
+                presenter.deleteNote(noteId);
+                return true;
+            case R.id.add_note:
+                presenter.onAddNoteButtonClicked();
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
 
     }
 
@@ -107,21 +144,20 @@ public class NewNoteActivity extends BaseActivity implements OpenedNoteView{
         dbHelper = new DbHelper(mContext);
         noteModel = new NoteModel(dbHelper);
         presenter = new SingleOpenedViewPresenter(noteModel);
+        presenter.attachView(this);
         chooseFragment(intent);
         mFragment = this.getSupportFragmentManager().findFragmentById(R.id.root_layout);
     }
 
     private void chooseFragment(@NonNull  Intent intent) {
 
-        String viewAction = intent.getAction();
-
-        if(isViewActionMatched(viewAction, OpenNoteMode.CREATE_NEW_NOTE.getMode())){
+        if(isViewActionMatched(mViewAction, OpenNoteMode.CREATE_NEW_NOTE.getMode())){
             this.getSupportFragmentManager()
                     .beginTransaction()
                     .add(R.id.root_layout, mCreateNewNoteFragment.newInstance())
                     .commit();
         }
-        else if(isViewActionMatched(viewAction, OpenNoteMode.EDIT_NOTE.getMode())){
+        else if(isViewActionMatched(mViewAction, OpenNoteMode.EDIT_NOTE.getMode())){
             Long noteId = intent.getExtras().getLong("noteId");
             Note note = noteModel.loadNoteById(noteId);
             this.getSupportFragmentManager()

@@ -15,6 +15,7 @@ import org.mockito.Mockito;
 import org.mockito.junit.MockitoJUnitRunner;
 
 import static org.junit.Assert.assertNotNull;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
@@ -55,7 +56,7 @@ public class SingleOpenedViewPresenterTest {
         when(view.getNoteText()).thenReturn("text");
         presenter.onAddNoteButtonClicked();
         ContentValues cv = new ContentValues();
-        verify(noteModel).addNote(cv,Mockito.mock(NoteModel.CompleteCallback.class));
+        verify(noteModel).addNote(cv, any(NoteModel.CompleteCallback.class));
     }
 
     @Test

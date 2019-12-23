@@ -49,13 +49,6 @@ public class CreateNewNoteFragment extends Fragment {
         noteModel = new NoteModel(dbHelper);
         mSingleOpenedViewPresenter = new SingleOpenedViewPresenter(noteModel);
         mSingleOpenedViewPresenter.attachView(activity);
-
-        view.findViewById(R.id.add_note).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                mSingleOpenedViewPresenter.onAddNoteButtonClicked();
-            }
-        });
     }
 
 

@@ -65,7 +65,7 @@ public class NoteModel {
     }
 
     public void deleteNotes(){
-        db.delete(NoteTable.TABLE, null,  null);
+        db.delete(NoteTable.TABLE,null, null);
     }
 
     public interface LoadNoteCallback {
