@@ -29,6 +29,8 @@ public class SingleOpenedViewPresenter {
         String title = singleNoteView.getNoteTitle();
         String text = singleNoteView.getNoteText();
 
+
+
         if(title.isEmpty() || text.isEmpty()){
             singleNoteView.showCreationError(R.string.error_note_is_empty);
         }

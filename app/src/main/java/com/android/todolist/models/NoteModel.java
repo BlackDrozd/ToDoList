@@ -11,6 +11,7 @@ import com.android.todolist.common.Note;
 import com.android.todolist.data.db.DbHelper;
 import com.android.todolist.data.db.NoteTable;
 
+import java.time.ZonedDateTime;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
@@ -32,8 +33,11 @@ public class NoteModel {
     }
 
     public void addNote(ContentValues contentValues, CompleteCallback callback) {
-        AddNoteTask addUserTask = new AddNoteTask(callback);
-        addUserTask.execute(contentValues);
+
+       GetGoogleTimeTask getGoogleTimeTask = new GetGoogleTimeTask();
+       getGoogleTimeTask.execute();
+       AddNoteTask addUserTask = new AddNoteTask(callback);
+       addUserTask.execute(contentValues);
     }
 
     public Note loadNoteById(@NonNull Long noteId){
@@ -135,6 +139,14 @@ public class NoteModel {
             if (callback != null) {
                 callback.onComplete();
             }
+        }
+    }
+
+    class GetGoogleTimeTask extends AsyncTask<Void, Void, ZonedDateTime>{
+
+        @Override
+        protected ZonedDateTime doInBackground(Void... voids) {
+            return null;
         }
     }
 
