@@ -4,6 +4,7 @@ import android.content.ContentValues;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.AsyncTask;
+import android.util.Log;
 
 import androidx.annotation.NonNull;
 
@@ -11,10 +12,16 @@ import com.android.todolist.common.Note;
 import com.android.todolist.data.db.DbHelper;
 import com.android.todolist.data.db.NoteTable;
 
+import java.io.BufferedInputStream;
+import java.io.InputStream;
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.time.ZonedDateTime;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
+
+import static androidx.constraintlayout.widget.Constraints.TAG;
 
 
 public class NoteModel {
@@ -32,12 +39,12 @@ public class NoteModel {
         loadNotesTask.execute();
     }
 
-    public void addNote(ContentValues contentValues, CompleteCallback callback) {
+    public void addNote(Note note, CompleteCallback callback) {
 
-       GetGoogleTimeTask getGoogleTimeTask = new GetGoogleTimeTask();
-       getGoogleTimeTask.execute();
-       AddNoteTask addUserTask = new AddNoteTask(callback);
-       addUserTask.execute(contentValues);
+     //  GetGoogleTimeTask getGoogleTimeTask = new GetGoogleTimeTask();
+      // getGoogleTimeTask.execute();
+       AddNoteTask addNoteTask = new AddNoteTask(callback);
+       addNoteTask.execute(note);
     }
 
     public Note loadNoteById(@NonNull Long noteId){
@@ -111,7 +118,7 @@ public class NoteModel {
 
     }
 
-    class AddNoteTask extends AsyncTask<ContentValues, Void, Void>{
+    class AddNoteTask extends AsyncTask<Note, Void, Void>{
 
         private final CompleteCallback callback;
 
@@ -120,9 +127,10 @@ public class NoteModel {
         }
 
         @Override
-        protected Void doInBackground(ContentValues... params) {
-            ContentValues cvNote = params[0];
-            mDbHelper.getWritableDatabase().insert(NoteTable.TABLE, null, cvNote);
+        protected Void doInBackground(Note... params) {
+            Note note = params[0];
+            mDbHelper.getWritableDatabase()
+                    .insert(NoteTable.TABLE, null, convertNoteToContentValues(note));
             try {
                 TimeUnit.SECONDS.sleep(1);
             } catch (InterruptedException e) {
@@ -131,6 +139,14 @@ public class NoteModel {
             return null;
         }
 
+        private ContentValues convertNoteToContentValues (Note note) {
+            Log.d(TAG, note.toString());
+            ContentValues cv = new ContentValues(3);
+            cv.put(NoteTable.COLUMN.TITLE, note.getTitle());
+            cv.put(NoteTable.COLUMN.NOTE_TEXT, note.getText());
+            cv.put(NoteTable.COLUMN.COLOR_ID, note.getColor());
+            return cv;
+        }
 
 
         @Override
@@ -146,6 +162,21 @@ public class NoteModel {
 
         @Override
         protected ZonedDateTime doInBackground(Void... voids) {
+
+           HttpURLConnection urlConnection = null;
+
+            try{
+                urlConnection = (HttpURLConnection) new URL("https://google.com").openConnection();
+                InputStream in = new BufferedInputStream(urlConnection.getInputStream());
+                    Log.d(TAG,"jsonanswer= "+in.toString());
+                   // readStream(in);
+            }
+           catch (Exception e) {
+                e.printStackTrace();
+            }
+            finally {
+                urlConnection.disconnect();
+            }
             return null;
         }
     }

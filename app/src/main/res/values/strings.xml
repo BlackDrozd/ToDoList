@@ -20,4 +20,5 @@
     <string name="page_about_toast">The page about in develop yet =^__^=</string>
     <string name="page_settings_toast">The page settings in develop yet =^__^=</string>
     <string name="share_note">поделиться</string>
+    <string name="action_save">Save</string>
 </resources>

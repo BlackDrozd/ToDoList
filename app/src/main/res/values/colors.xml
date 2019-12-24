@@ -6,4 +6,5 @@
     <color name="default_border_color">#DFDFDF</color>
     <color name="colorTitle">#292929</color>
     <color name="colorWhite">#fff</color>
+    <color name="lightGreen">#b0e7cc</color>
 </resources>

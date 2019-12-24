@@ -1,13 +1,10 @@
 package com.android.todolist.presenters;
 
-import android.content.ContentValues;
-
 import androidx.annotation.NonNull;
 
 import com.android.todolist.NewNoteActivity;
 import com.android.todolist.R;
 import com.android.todolist.common.Note;
-import com.android.todolist.data.db.NoteTable;
 import com.android.todolist.models.NoteModel;
 
 public class SingleOpenedViewPresenter {
@@ -29,16 +26,14 @@ public class SingleOpenedViewPresenter {
         String title = singleNoteView.getNoteTitle();
         String text = singleNoteView.getNoteText();
 
-
-
         if(title.isEmpty() || text.isEmpty()){
             singleNoteView.showCreationError(R.string.error_note_is_empty);
         }
         else {
 
-            ContentValues cv = packToContentValues(title, text);
+            Note note = new Note(title, text);
 
-            mNoteModel.addNote(cv, new NoteModel.CompleteCallback() {
+            mNoteModel.addNote(note, new NoteModel.CompleteCallback() {
                 @Override
                 public void onComplete() {
                     singleNoteView.showToast(R.string.note_added_toast);
@@ -47,14 +42,6 @@ public class SingleOpenedViewPresenter {
             });
         }
     }
-
-    private ContentValues packToContentValues(String title, String text) {
-        ContentValues cv = new ContentValues(2);
-        cv.put(NoteTable.COLUMN.TITLE, title);
-        cv.put(NoteTable.COLUMN.NOTE_TEXT, text);
-        return cv;
-    }
-
 
     public void editNote(){
         Note note  = singleNoteView.getEditedNote();

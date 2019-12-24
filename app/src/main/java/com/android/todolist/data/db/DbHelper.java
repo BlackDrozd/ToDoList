@@ -6,11 +6,14 @@ import android.database.sqlite.SQLiteOpenHelper;
 
 public class DbHelper extends SQLiteOpenHelper {
 
+    private static final String TAG = "DbHelper";
+
     public static final String NAME = "note";
-    public static final int VERSION = 1;
+    public static final int VERSION = 3;
 
     public DbHelper(Context context) {
         super(context, NAME, null, VERSION);
+
     }
 
     @Override
@@ -20,7 +23,8 @@ public class DbHelper extends SQLiteOpenHelper {
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-
+        db.execSQL("DROP TABLE IF EXISTS " + NoteTable.TABLE);
+       onCreate(db);
     }
     
 

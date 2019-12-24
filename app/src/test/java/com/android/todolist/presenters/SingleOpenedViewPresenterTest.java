@@ -50,6 +50,7 @@ public class SingleOpenedViewPresenterTest {
         verify(view).showCreationError(R.string.error_note_is_empty);
     }
 
+    @Test
     public void shouldShowToastWhenNoteUpdated(){
         presenter.attachView(view);
         when(view.getNoteTitle()).thenReturn("title");

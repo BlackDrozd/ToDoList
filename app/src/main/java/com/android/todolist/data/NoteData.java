@@ -4,13 +4,14 @@ public class NoteData {
 
     private String mTitle;
     private String mText;
+    private int mColor;
 
     public String getTitle() {
         return mTitle;
     }
 
     public void setTitle(String title) {
-        this.mTitle = title;
+        mTitle = title;
     }
 
     public String getText() {
@@ -18,7 +19,11 @@ public class NoteData {
     }
 
     public void setText(String text) {
-        this.mText = text;
+        mText = text;
     }
+
+    public int getColor(){ return mColor; }
+
+    public void setColor(int color){ mColor = color;}
 
 }

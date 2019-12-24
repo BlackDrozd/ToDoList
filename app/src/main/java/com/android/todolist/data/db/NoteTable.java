@@ -16,8 +16,8 @@ public class NoteTable {
             String.format("create table %s ("
                             + "%s integer primary key autoincrement,"
                             + "%s text,"
-                            + "%s text"
-                            + "%s integer"
+                            + "%s text,"
+                            + "%s integer,"
                             + "%s integer"
                             + ");",
                     TABLE, COLUMN.ID, COLUMN.TITLE, COLUMN.NOTE_TEXT, COLUMN.TIMESTAMP, COLUMN.COLOR_ID);

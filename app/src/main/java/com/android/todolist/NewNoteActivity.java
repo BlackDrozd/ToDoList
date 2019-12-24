@@ -71,13 +71,12 @@ public class NewNoteActivity extends BaseActivity implements OpenedNoteView{
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
 
-        Long noteId = intent.getExtras().getLong("noteId");
-
         switch (item.getItemId()){
             case R.id.edit_note:
                 presenter.editNote();
                 return true;
             case R.id.delete_note:
+                Long noteId = intent.getExtras().getLong("noteId");
                 presenter.deleteNote(noteId);
                 return true;
             case R.id.add_note:

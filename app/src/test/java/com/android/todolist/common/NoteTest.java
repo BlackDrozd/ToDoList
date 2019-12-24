@@ -2,7 +2,10 @@ package com.android.todolist.common;
 
 import org.junit.Test;
 
+import static org.hamcrest.Matchers.containsString;
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertThat;
 
 public class NoteTest {
 
@@ -29,6 +32,8 @@ public class NoteTest {
         Note note1 = new Note("Note 1", "some description");
         note1.setId(1);
         assertEquals("{ Note: id = 1, title = Note 1 , text = some description }", note1.toString());
+        assertNotNull(note1.toString());
+        assertThat(note1.toString(), containsString("title"));
     }
 
 }
