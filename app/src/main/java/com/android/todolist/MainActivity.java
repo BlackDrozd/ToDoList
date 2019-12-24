@@ -14,6 +14,7 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.android.todolist.common.AboutAppActivity;
 import com.android.todolist.common.Note;
 import com.android.todolist.common.NoteAdapter;
 import com.android.todolist.common.OpenNoteMode;
@@ -77,7 +78,8 @@ public class MainActivity extends BaseActivity implements
                 showToast(R.string.all_notes_deleted);
                 return true;
             case R.id.about_item:
-                showToast(R.string.page_about_toast);
+                Intent intent = new Intent(this, AboutAppActivity.class);
+                this.startActivity(intent);
                 return true;
                 default:
                     return super.onOptionsItemSelected(item);

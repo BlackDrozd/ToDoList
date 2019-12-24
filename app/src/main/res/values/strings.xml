@@ -23,4 +23,6 @@
     <string name="tool_txt">Note\'s text</string>
     <string name="save_item">Save</string>
     <string name="delete_item">Delete</string>
-</resources>
+    <string name="text_about_app">Это приложение поможет Вам
+        создавать, удалять и редактировать текстовые заметки.</string>
+    </resources>
