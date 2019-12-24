@@ -79,9 +79,6 @@ public class MainActivity extends BaseActivity implements
             case R.id.about_item:
                 showToast(R.string.page_about_toast);
                 return true;
-            case R.id.settings_item:
-                showToast(R.string.page_settings_toast);
-                return true;
                 default:
                     return super.onOptionsItemSelected(item);
         }

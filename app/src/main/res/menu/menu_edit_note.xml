@@ -3,13 +3,14 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <item
         android:id="@+id/edit_note"
-        android:title="сохранить изменения"
+        android:title="@string/save_item"
         app:showAsAction="never"/>
     <item
         android:id="@+id/delete_note"
-        android:title="удалить"
+        android:title="@string/delete_item"
         app:showAsAction="never"/>
     <item
+        android:visible="false"
         android:id="@+id/send_note"
         android:title="@string/share_note"
         app:showAsAction="never"/>

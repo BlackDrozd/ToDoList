@@ -6,11 +6,11 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.Fragment;
 
 import com.android.todolist.NewNoteActivity;
@@ -47,7 +47,7 @@ public class EditNoteFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-       LinearLayout root = (LinearLayout) inflater.inflate(R.layout.edit_note_fragment, container, false);
+       ConstraintLayout root = (ConstraintLayout) inflater.inflate(R.layout.edit_note_fragment, container, false);
         ((TextView)root.findViewById(R.id.note_title)).setText(getArguments().getString(ARG_TITLE));
         ((TextView)root.findViewById(R.id.note_text)).setText(getArguments().getString(ARG_TEXT));
         ((TextView)root.findViewById(R.id.note_id)).setText(getArguments().getString(ARG_ID));

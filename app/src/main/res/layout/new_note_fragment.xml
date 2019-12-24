@@ -5,7 +5,8 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="@dimen/default_padding">
+    android:padding="@dimen/default_padding"
+    android:background="@color/colorWhite">
 
     <EditText
         android:id="@+id/note_title"
@@ -33,7 +34,6 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/time_margin"
         android:gravity="center_horizontal"
-        android:hint="latest update at 15:03 pm"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 

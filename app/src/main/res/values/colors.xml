@@ -3,8 +3,10 @@
     <color name="colorPrimary">#008577</color>
     <color name="colorPrimaryDark">#00574B</color>
     <color name="colorAccent">#D81B60</color>
-    <color name="default_border_color">#DFDFDF</color>
+    <color name="default_border_color">#F34D4444</color>
     <color name="colorTitle">#292929</color>
     <color name="colorWhite">#fff</color>
     <color name="lightGreen">#b0e7cc</color>
+    <color name="fab_tint">#118AE9</color>
+    <color name="fab_background_tint">#81818D</color>
 </resources>

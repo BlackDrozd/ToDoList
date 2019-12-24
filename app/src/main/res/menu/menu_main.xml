@@ -8,15 +8,8 @@
         android:title="@string/delete_all"
         app:showAsAction="never"/>
     <item
-        android:id="@+id/settings_item"
-        android:icon="@drawable/ic_delete_black_24dp"
-        android:title="настройки"
-        app:showAsAction="never">
-    </item>
-    <item
         android:id="@+id/about_item"
         android:icon="@drawable/ic_delete_black_24dp"
         android:title="@string/about_programm"
         app:showAsAction="never"/>
-
 </menu>
