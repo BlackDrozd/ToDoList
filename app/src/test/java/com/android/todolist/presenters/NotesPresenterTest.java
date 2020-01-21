@@ -1,6 +1,7 @@
 package com.android.todolist.presenters;
 
 import com.android.todolist.MainActivity;
+import com.android.todolist.StartView;
 import com.android.todolist.models.NoteModel;
 
 import org.junit.Before;
@@ -14,7 +15,11 @@ import org.mockito.junit.MockitoJUnitRunner;
 public class NotesPresenterTest {
 
     @Mock
-    private MainActivity view;
+    private MainActivity mainActivity;
+
+    @Mock
+    private StartView view;
+
 
     @Mock
     private NoteModel noteModel;
@@ -26,7 +31,7 @@ public class NotesPresenterTest {
         noteModel = Mockito.mock(NoteModel.class);
         view  = Mockito.mock(MainActivity.class);
         presenter = new NotesPresenter(noteModel);
-        presenter.attachView(view);
+        presenter.attachView(mainActivity);
 
     }
 

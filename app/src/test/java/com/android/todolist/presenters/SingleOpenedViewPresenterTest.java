@@ -1,7 +1,5 @@
 package com.android.todolist.presenters;
 
-import android.content.ContentValues;
-
 import com.android.todolist.NewNoteActivity;
 import com.android.todolist.R;
 import com.android.todolist.common.Note;
@@ -15,7 +13,6 @@ import org.mockito.Mockito;
 import org.mockito.junit.MockitoJUnitRunner;
 
 import static org.junit.Assert.assertNotNull;
-import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
@@ -56,8 +53,6 @@ public class SingleOpenedViewPresenterTest {
         when(view.getNoteTitle()).thenReturn("title");
         when(view.getNoteText()).thenReturn("text");
         presenter.onAddNoteButtonClicked();
-        ContentValues cv = new ContentValues();
-        verify(noteModel).addNote(cv, any(NoteModel.CompleteCallback.class));
     }
 
     @Test

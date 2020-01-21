@@ -1,6 +1,7 @@
 package com.android.todolist.presenters;
 
 import com.android.todolist.MainActivity;
+import com.android.todolist.StartView;
 import com.android.todolist.common.Note;
 import com.android.todolist.models.NoteModel;
 
@@ -10,7 +11,9 @@ public class NotesPresenter {
 
     private static final String TAG = "NotesPresenter";
 
-    private MainActivity startView;
+    //private MainActivity startView;
+
+    private StartView startView;
 
     private final NoteModel mNoteModel;
 

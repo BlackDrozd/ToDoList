@@ -25,4 +25,5 @@
     <string name="delete_item">Delete</string>
     <string name="text_about_app">Это приложение поможет Вам
         создавать, удалять и редактировать текстовые заметки.</string>
-    </resources>
+    <string name="createActivity_title">Create a note</string>
+</resources>

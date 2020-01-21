@@ -163,7 +163,6 @@ public class NewNoteActivity extends BaseActivity implements OpenedNoteView{
                     .beginTransaction()
                     .add(R.id.root_layout, mEditNoteFragment.newInstance(note))
                     .commit();
-
         }
     }
 
