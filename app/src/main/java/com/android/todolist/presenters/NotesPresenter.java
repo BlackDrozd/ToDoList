@@ -1,27 +1,24 @@
 package com.android.todolist.presenters;
 
-import com.android.todolist.MainActivity;
 import com.android.todolist.StartView;
 import com.android.todolist.common.Note;
 import com.android.todolist.models.NoteModel;
 
 import java.util.List;
 
-public class NotesPresenter {
+public class NotesPresenter extends BasePresenter<StartView>{
 
     private static final String TAG = "NotesPresenter";
 
-    //private MainActivity startView;
-
-    private StartView startView;
+    private StartView mStartView;
 
     private final NoteModel mNoteModel;
 
     public NotesPresenter(NoteModel model){ mNoteModel = model;}
 
-    public void attachView(MainActivity mainActivity){ startView = mainActivity; }
+    public void attachView(StartView view){ mStartView = view; }
 
-    public void detachView() { startView = null; }
+    public void detachView() { mStartView = null; }
 
     public void viewIsReady() { loadAllNotes();}
 
@@ -29,7 +26,7 @@ public class NotesPresenter {
         mNoteModel.loadNotes(new NoteModel.LoadNoteCallback() {
             @Override
             public void onLoad(List<Note> notes) {
-                startView.showNotes(notes);
+                mStartView.showNotes(notes);
             }
         });
     }

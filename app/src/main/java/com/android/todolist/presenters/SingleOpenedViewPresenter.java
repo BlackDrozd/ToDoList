@@ -2,32 +2,32 @@ package com.android.todolist.presenters;
 
 import androidx.annotation.NonNull;
 
-import com.android.todolist.NewNoteActivity;
+import com.android.todolist.OpenedNoteView;
 import com.android.todolist.R;
 import com.android.todolist.common.Note;
 import com.android.todolist.models.NoteModel;
 
-public class SingleOpenedViewPresenter {
+public class SingleOpenedViewPresenter extends BasePresenter<OpenedNoteView> {
 
     private static final String TAG = "SingleOpenedViewPresent";
-
-    private NewNoteActivity singleNoteView;
+    
+    private OpenedNoteView mOpenedNoteView;
 
     private final NoteModel mNoteModel;
 
     public SingleOpenedViewPresenter(NoteModel model){ mNoteModel = model;}
 
-    public void attachView(NewNoteActivity newNoteActivity){ singleNoteView = newNoteActivity; }
+    public void attachView(OpenedNoteView view){ mOpenedNoteView = view; }
 
-    public void detachView() { singleNoteView = null; }
+    public void detachView() { mOpenedNoteView = null; }
 
     public void onAddNoteButtonClicked() {
 
-        String title = singleNoteView.getNoteTitle();
-        String text = singleNoteView.getNoteText();
+        String title = mOpenedNoteView.getNoteTitle();
+        String text = mOpenedNoteView.getNoteText();
 
         if(title.isEmpty() || text.isEmpty()){
-            singleNoteView.showCreationError(R.string.error_note_is_empty);
+            mOpenedNoteView.showCreationError(R.string.error_note_is_empty);
         }
         else {
 
@@ -36,28 +36,24 @@ public class SingleOpenedViewPresenter {
             mNoteModel.addNote(note, new NoteModel.CompleteCallback() {
                 @Override
                 public void onComplete() {
-                    singleNoteView.showToast(R.string.note_added_toast);
-                    singleNoteView.startMainActivity();
+                    mOpenedNoteView.showToast(R.string.note_added_toast);
+                    mOpenedNoteView.startMainActivity();
                 }
             });
         }
     }
 
     public void editNote(){
-        Note note  = singleNoteView.getEditedNote();
+        Note note  = mOpenedNoteView.getEditedNote();
         updateNote(note);
-        singleNoteView.showToast(R.string.note_updated_toast);
-        singleNoteView.startMainActivity();
+        mOpenedNoteView.showToast(R.string.note_updated_toast);
+        mOpenedNoteView.startMainActivity();
     }
 
     public void deleteNote(@NonNull Long noteId){
         mNoteModel.deleteNote(noteId);
-        singleNoteView.showToast(R.string.note_deleted_toast);
-        singleNoteView.startMainActivity();
-    }
-
-    public void deleteNotes(){
-      mNoteModel.deleteNotes();
+        mOpenedNoteView.showToast(R.string.note_deleted_toast);
+        mOpenedNoteView.startMainActivity();
     }
 
     public void updateNote(@NonNull Note note){
